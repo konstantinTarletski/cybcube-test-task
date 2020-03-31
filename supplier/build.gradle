@@ -24,6 +24,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
 
+task download(type: Exec) {
+	configurations.testCompile.files
+	commandLine 'echo', 'Downloaded all dependencies!'
+}
+
 test {
 	useJUnitPlatform()
 }
