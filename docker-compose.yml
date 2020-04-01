@@ -30,9 +30,9 @@ services:
 
   consumer:
     build:
-      context: .
-      dockerfile: consumer/Dockerfile
-    container_name: asset_registry
+      context: consumer
+      dockerfile: Dockerfile
+    container_name: consumer
     ports:
       - 8812:8812
     #environment:
@@ -46,9 +46,9 @@ services:
 
   supplier:
     build:
-      context: .
-      dockerfile: supplier/Dockerfile
-    container_name: asset_registry
+      context: supplier
+      dockerfile: Dockerfile
+    container_name: supplier
     ports:
       - 8811:8811
     #environment:
