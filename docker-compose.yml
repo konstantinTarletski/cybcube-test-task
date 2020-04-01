@@ -27,6 +27,9 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - default
+
 
   consumer:
     build:
@@ -43,6 +46,8 @@ services:
     #  - default
     depends_on:
       - redis
+    networks:
+      - default
 
   supplier:
     build:
@@ -59,9 +64,14 @@ services:
     #  - default
     depends_on:
       - rabbitmq
+    networks:
+      - default
 
   redis:
     image: redis
     container_name: cache
     ports:
       - 6379:6379
+    networks:
+      - default
+
