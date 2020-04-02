@@ -23,7 +23,7 @@ public class QueueConsumer {
 
     @Bean
     public void scheduler() {
-        Timer timer = new Timer();
+        var timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 QueueConsumer.this.randomNum = current().nextInt(0, personConfiguration.getPerson().size());
