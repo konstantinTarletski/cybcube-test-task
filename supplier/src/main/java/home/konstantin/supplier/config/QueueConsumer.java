@@ -19,15 +19,13 @@ public class QueueConsumer {
     @Autowired
     private PersonConfiguration personConfiguration;
 
-    private int randomNum;
 
     @Bean
     public void scheduler() {
         var timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                QueueConsumer.this.randomNum = current().nextInt(0, personConfiguration.getPerson().size());
-                //log.info("Sending item with index = {}", QueueConsumer.this.randomNum);
+                log.info("Scheduler runs for data sender");
                 QueueConsumer.this.supplier();
             }
         }, 0, 1000);
@@ -36,6 +34,7 @@ public class QueueConsumer {
     @Bean
     public Supplier<Person> supplier() {
         return () -> {
+            var randomNum = current().nextInt(0, personConfiguration.getPerson().size());
             var person = personConfiguration.getPerson().get(randomNum);
             log.info("Sending person  = {}", person);
             return personConfiguration.getPerson().get(randomNum);
