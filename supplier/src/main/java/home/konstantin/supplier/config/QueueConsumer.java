@@ -19,7 +19,6 @@ public class QueueConsumer {
     @Autowired
     private PersonConfiguration personConfiguration;
 
-
     @Bean
     public void scheduler() {
         var timer = new Timer();
