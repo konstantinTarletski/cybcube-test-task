@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  core:
+  default:
 
 services:
 
@@ -31,7 +31,7 @@ services:
       - 5672:5672
       - 15672:15672
     networks:
-      - core
+      - default
 
   consumer:
     build:
@@ -48,7 +48,7 @@ services:
       - rabbitmq
       - supplier
     networks:
-      - core
+      - default
 
   supplier:
     build:
@@ -62,7 +62,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-      - core
+      - default
 
   redis:
     image: redis
@@ -70,7 +70,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      - core
+      - default
 
   redis-commander:
     container_name: redis-commander
@@ -82,4 +82,4 @@ services:
     ports:
       - 8813:8081
     networks:
-      - core
+      - default
