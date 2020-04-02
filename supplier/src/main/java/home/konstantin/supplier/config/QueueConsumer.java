@@ -24,7 +24,7 @@ public class QueueConsumer {
         var timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                log.info("Scheduler runs for data sender");
+                log.info("Scheduler executed for data sending");
                 QueueConsumer.this.supplier();
             }
         }, 0, 1000);
