@@ -24,6 +24,19 @@ services:
     #environment:
       #- KAFKA_ADVERTISED_HOST_NAME=zookeeper
 
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: pgadmin
+      POSTGRES_PASSWORD: pgadmin
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - default
+
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
@@ -46,6 +59,7 @@ services:
     depends_on:
       - redis
       - rabbitmq
+      - postgres
       - supplier
     networks:
       - default
@@ -83,3 +97,7 @@ services:
       - 8813:8081
     networks:
       - default
+
+volumes:
+  postgres:
+  pgadmin:
