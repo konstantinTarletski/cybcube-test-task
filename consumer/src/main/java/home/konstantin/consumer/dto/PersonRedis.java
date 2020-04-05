@@ -1,11 +1,7 @@
 package home.konstantin.consumer.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @Data
@@ -14,15 +10,6 @@ public class PersonRedis {
 
     @Id
     public String id;
-
-    @JsonProperty("")
-    private String firstName;
-
-    @JsonProperty("last_name")
-    private String lastName;
-
-    private int age;
-
-    private int handlingCount;
+    private int rating;
 
 }

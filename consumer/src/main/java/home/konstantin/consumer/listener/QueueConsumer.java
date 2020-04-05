@@ -1,6 +1,6 @@
 package home.konstantin.consumer.listener;
 
-import home.konstantin.consumer.dto.PersonRedis;
+import home.konstantin.consumer.dto.PersonQueue;
 import home.konstantin.consumer.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class QueueConsumer {
     private final PersonService personService;
 
     @Bean
-    public Consumer<PersonRedis> consumer() {
+    public Consumer<PersonQueue> consumer() {
         return value -> {
             log.info("get item = {}", value);
             personService.processPerson(value);

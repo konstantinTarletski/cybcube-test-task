@@ -28,8 +28,8 @@ services:
     container_name: postgres
     image: postgres
     environment:
-      POSTGRES_USER: pgadmin
-      POSTGRES_PASSWORD: pgadmin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - postgres:/data/postgres
     ports:
