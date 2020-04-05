@@ -56,11 +56,11 @@ services:
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_REDIS_HOST: redis
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
     depends_on:
       - redis
       - rabbitmq
       - postgres
-      - supplier
     networks:
       - default
 
