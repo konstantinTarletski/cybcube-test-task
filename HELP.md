@@ -1,7 +1,7 @@
 # Cybcube test task
 
 ## General information
-This test task consist of 2 microservices , which communicate with each other via RabbitMQ (in future i will add Apache Kafka also). 
+This test task consist of 2 microservices, which communicate with each other via RabbitMQ (in future I will add Apache Kafka also). 
 First microservice (supplier) reads persons list from poropeties (filename can be defined in properties file or like environment variable )
 In file there is list of persons who will be taked randamly and send via queue to another microservice.
 
@@ -22,6 +22,22 @@ As I understand from test task, information in redis should be same like it writ
 * Docker-compose
 * Spring Data JPA
 * Some other small spring embedded things
+
+## How to define custom person file
+
+link go test data defined in **application.properties** file
+**test-data=classpath:test-data.properties**
+
+**test-data.properties** is the part of the supplier and there are 7 persons in there.
+Data format like that:
+
+test-data.person[2].firstName=Dmitry
+test-data.person[2].lastName=Ivanovich
+test-data.person[2].age=4
+
+There are 2 ways point to your file:
+* Modify that property : **test-data=classpath:test-data.properties**
+* Set to environment variables **test-data** propery with link to your file.
 
 ## How to run project
 
