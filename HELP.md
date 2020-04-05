@@ -26,14 +26,19 @@ As I understand from test task, information in redis should be same like it writ
 ## How to define custom person file
 
 link go test data defined in **application.properties** file
+
 **test-data=classpath:test-data.properties**
 
 **test-data.properties** is the part of the supplier and there are 7 persons in there.
+
 Data format like that:
 
 test-data.person[2].firstName=Dmitry
+
 test-data.person[2].lastName=Ivanovich
+
 test-data.person[2].age=4
+
 
 There are 2 ways point to your file:
 * Modify that property : **test-data=classpath:test-data.properties**
