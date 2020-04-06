@@ -1,11 +1,9 @@
-package home.konstantin.consumer.dto;
+package home.konstantin.supplier.dto;
 
 import lombok.Data;
-import org.springframework.data.redis.core.RedisHash;
 
 @Data
-@RedisHash("persons")
-public class PersonQueue {
+public class PersonQueueDto {
 
     private String firstName;
     private String lastName;

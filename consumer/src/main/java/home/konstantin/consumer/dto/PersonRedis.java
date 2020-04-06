@@ -10,6 +10,6 @@ public class PersonRedis {
 
     @Id
     public String id;
-    private int rating;
+    private double rating;
 
 }

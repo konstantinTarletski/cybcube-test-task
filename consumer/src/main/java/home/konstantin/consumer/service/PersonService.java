@@ -20,19 +20,25 @@ public class PersonService {
     public void processPerson(PersonQueue personQueue) {
         log.info("processing person = {}", personQueue);
 
+        var rating = calculateRating(personQueue);
+
         var dbPerson = personDBRepository.findByFirstNameAndLastName(personQueue.getFirstName(),
             personQueue.getLastName()).orElse(getPersonDBFromPersonQueue(personQueue));
-
         dbPerson.setHandlingCount(dbPerson.getHandlingCount() + 1);
+        dbPerson.setRating(rating);
         personDBRepository.save(dbPerson);
 
         var redisPerson = personRedisRepository.findById(
             getRedisId(personQueue.getFirstName(), personQueue.getLastName())).
             orElse(getPersonRedisFromPersonQueue(personQueue));
-
-        redisPerson.setRating(dbPerson.getHandlingCount() * dbPerson.getAge());
+        redisPerson.setRating(rating);
         personRedisRepository.save(redisPerson);
+
         log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
+    }
+
+    private double calculateRating(PersonQueue personQueue){
+        return personQueue.getCalculationSeed() * personQueue.getAge();
     }
 
     private String getRedisId(String firstName, String lastName){

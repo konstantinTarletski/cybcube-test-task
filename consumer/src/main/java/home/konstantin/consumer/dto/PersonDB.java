@@ -20,5 +20,6 @@ public class PersonDB {
     private String lastName;
     private int age;
     private int handlingCount;
+    private double rating;
 
 }
