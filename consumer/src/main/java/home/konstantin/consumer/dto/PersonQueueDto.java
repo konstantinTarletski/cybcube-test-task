@@ -3,7 +3,7 @@ package home.konstantin.consumer.dto;
 import lombok.Data;
 
 @Data
-public class PersonQueue {
+public class PersonQueueDto {
 
     private String firstName;
     private String lastName;

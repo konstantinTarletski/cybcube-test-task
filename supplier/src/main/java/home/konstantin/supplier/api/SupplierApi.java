@@ -20,12 +20,12 @@ import static java.lang.String.format;
 @RestController
 @RequestMapping("api/supplier")
 @RequiredArgsConstructor
-public class PersonApi {
+public class SupplierApi {
 
     private final SchedulerSender schedulerSender;
     private final MessageSender messageSender;
 
-    @PostMapping(path="/sent-person-to-queue")
+    @PostMapping(path = "/sent-person-to-queue")
     public String publishMessage(@Valid @RequestBody PersonApiDto assetDto) {
         messageSender.sendPersonToQueue(assetDto);
         String logText = format("Person = %s was sent to queue", assetDto);
@@ -33,7 +33,7 @@ public class PersonApi {
         return logText;
     }
 
-    @GetMapping(path="/enable-scheduler")
+    @GetMapping(path = "/enable-scheduler")
     public String enableSender(@RequestParam boolean enabled) {
         schedulerSender.setEnabled(enabled);
         String logText = format("Scheduler status now = %s", schedulerSender.isEnabled());

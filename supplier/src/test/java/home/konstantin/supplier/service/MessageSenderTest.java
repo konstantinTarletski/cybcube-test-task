@@ -19,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.NONE, properties = {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, properties = {
     "--spring.cloud.stream.bindings.input.contentType=application/json",
-    "--spring.cloud.stream.bindings.output.contentType=application/json" })
+    "--spring.cloud.stream.bindings.output.contentType=application/json"})
 @DirtiesContext
 public class MessageSenderTest {
 
@@ -49,12 +49,12 @@ public class MessageSenderTest {
         var testPerson = getTestPersonQueueDto();
 
         assertTrue(personFromQueue.getAge() == testPerson.getAge());
-        assertEquals(personFromQueue.getFirstName(),testPerson.getFirstName());
-        assertEquals(personFromQueue.getLastName(),testPerson.getLastName());
+        assertEquals(personFromQueue.getFirstName(), testPerson.getFirstName());
+        assertEquals(personFromQueue.getLastName(), testPerson.getLastName());
         assertTrue(personFromQueue.getCalculationSeed() == personConfiguration.getCalculationSeed());
     }
 
-    private PersonApiDto getTestPersonApiDto(){
+    private PersonApiDto getTestPersonApiDto() {
         var person = new PersonApiDto();
         person.setAge(10);
         person.setFirstName("ABC");
@@ -62,7 +62,7 @@ public class MessageSenderTest {
         return person;
     }
 
-    private PersonQueueDto getTestPersonQueueDto(){
+    private PersonQueueDto getTestPersonQueueDto() {
         var person = new PersonQueueDto();
         person.setAge(10);
         person.setFirstName("ABC");

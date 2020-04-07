@@ -24,7 +24,7 @@ public class MessageSender {
         messageSource.output().send(MessageBuilder.withPayload(getPersonQueueDtoFromPersonApiDto(personApi)).build());
     }
 
-    private PersonQueueDto getPersonQueueDtoFromPersonApiDto(PersonApiDto personApi){
+    private PersonQueueDto getPersonQueueDtoFromPersonApiDto(PersonApiDto personApi) {
         var personQueue = new PersonQueueDto();
         personQueue.setAge(personApi.getAge());
         personQueue.setFirstName(personApi.getFirstName());

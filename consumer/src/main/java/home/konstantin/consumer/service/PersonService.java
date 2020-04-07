@@ -1,8 +1,8 @@
 package home.konstantin.consumer.service;
 
-import home.konstantin.consumer.dto.PersonQueue;
-import home.konstantin.consumer.dto.PersonRedis;
-import home.konstantin.consumer.dto.PersonDB;
+import home.konstantin.consumer.dto.PersonQueueDto;
+import home.konstantin.consumer.dto.PersonRedisDto;
+import home.konstantin.consumer.dto.PersonDbDto;
 import home.konstantin.consumer.repository.PersonDBRepository;
 import home.konstantin.consumer.repository.PersonRedisRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class PersonService {
     private final PersonRedisRepository personRedisRepository;
     private final PersonDBRepository personDBRepository;
 
-    public void processPerson(PersonQueue personQueue) {
+    public void processPerson(PersonQueueDto personQueue) {
         log.info("processing person = {}", personQueue);
 
         var rating = calculateRating(personQueue);
@@ -41,32 +41,32 @@ public class PersonService {
         log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
     }
 
-    public List<PersonDB> getAllPersonsFromDatabase(){
+    public List<PersonDbDto> getAllPersonsFromDatabase() {
         return StreamSupport.stream(personDBRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 
-    public List<PersonRedis> getAllPersonsFromRedis(){
+    public List<PersonRedisDto> getAllPersonsFromRedis() {
         return StreamSupport.stream(personRedisRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 
-    private double calculateRating(PersonQueue personQueue){
+    protected double calculateRating(PersonQueueDto personQueue) {
         return personQueue.getCalculationSeed() * personQueue.getAge();
     }
 
-    private String getRedisId(String firstName, String lastName){
+    protected String getRedisId(String firstName, String lastName) {
         return firstName + " " + lastName;
     }
 
-    private PersonRedis getPersonRedisFromPersonQueue(PersonQueue input){
-        var personRedis = new PersonRedis();
+    private PersonRedisDto getPersonRedisFromPersonQueue(PersonQueueDto input) {
+        var personRedis = new PersonRedisDto();
         personRedis.setId(getRedisId(input.getFirstName(), input.getLastName()));
         return personRedis;
     }
 
-    private PersonDB getPersonDBFromPersonQueue(PersonQueue input){
-        var personDB = new PersonDB();
+    private PersonDbDto getPersonDBFromPersonQueue(PersonQueueDto input) {
+        var personDB = new PersonDbDto();
         personDB.setAge(input.getAge());
         personDB.setFirstName(input.getFirstName());
         personDB.setLastName(input.getLastName());

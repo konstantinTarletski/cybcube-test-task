@@ -1,12 +1,12 @@
 package home.konstantin.consumer.repository;
 
-import home.konstantin.consumer.dto.PersonDB;
+import home.konstantin.consumer.dto.PersonDbDto;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface PersonDBRepository extends CrudRepository<PersonDB, Long> {
+public interface PersonDBRepository extends CrudRepository<PersonDbDto, Long> {
 
-    Optional<PersonDB> findByFirstNameAndLastName(String firstName, String lastName);
+    Optional<PersonDbDto> findByFirstNameAndLastName(String firstName, String lastName);
 
 }

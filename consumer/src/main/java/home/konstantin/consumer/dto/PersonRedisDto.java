@@ -1,12 +1,14 @@
 package home.konstantin.consumer.dto;
 
 import lombok.Data;
+
 import javax.persistence.Id;
+
 import org.springframework.data.redis.core.RedisHash;
 
 @Data
 @RedisHash("persons")
-public class PersonRedis {
+public class PersonRedisDto {
 
     @Id
     public String id;
