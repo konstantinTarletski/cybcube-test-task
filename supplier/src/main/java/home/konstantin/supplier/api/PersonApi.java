@@ -18,7 +18,7 @@ import static java.lang.String.format;
 
 @Slf4j
 @RestController
-@RequestMapping("api/persons")
+@RequestMapping("api/supplier")
 @RequiredArgsConstructor
 public class PersonApi {
 

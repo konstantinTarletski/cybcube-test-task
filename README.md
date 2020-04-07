@@ -27,7 +27,7 @@ As I understand from test task, information in redis should be same like it writ
 
 There are 2 end points in this microservice
 * To send custom person to queue
-`POST http://localhost:8811/api/persons/sent-person-to-queue`
+`POST http://localhost:8811/api/supplier/sent-person-to-queue`
 
     Data format:
     ```
@@ -39,13 +39,25 @@ There are 2 end points in this microservice
     ```
 * To enable/disable scheduler for sending predefined persons from test-data file.
     
-    `GET http://localhost:8811/api/persons/enable-scheduler?enabled=false`
+    `GET http://localhost:8811/api/supplier/enable-scheduler?enabled=false`
     
     Where `enabled` can be `true` or `false`
     
     If scheduler is enabled, then it begins to send to queue predefined persons from test data.
     Person list can be defined in separate properties file. Name ot this file can be set in properties-file or like environment variable. 
     Scheduler period also can be defined in properties file.
+
+## Consumer microservice API
+
+There are 2 end points in this microservice
+
+* To see all persons from redis
+
+    `GET http://localhost:8812/api/consumer/get-redis-person-list`
+    
+* To see all persons from DB
+
+    `GET http://localhost:8812/api/consumer/get-db-person-list`
 
 ## Sender configuration
 

@@ -9,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,16 @@ public class PersonService {
         personRedisRepository.save(redisPerson);
 
         log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
+    }
+
+    public List<PersonDB> getAllPersonsFromDatabase(){
+        return StreamSupport.stream(personDBRepository.findAll().spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
+    public List<PersonRedis> getAllPersonsFromRedis(){
+        return StreamSupport.stream(personRedisRepository.findAll().spliterator(), false)
+            .collect(Collectors.toList());
     }
 
     private double calculateRating(PersonQueue personQueue){
