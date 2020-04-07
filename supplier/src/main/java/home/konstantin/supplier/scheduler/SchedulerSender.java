@@ -40,7 +40,7 @@ public class SchedulerSender {
                     var randomNum = current().nextInt(0, personConfiguration.getPerson().size());
                     var person = personConfiguration.getPerson().get(randomNum);
                     messageSender.sendPersonToQueue(person);
-                    log.info("Scheduler send person = {}", person);
+                    log.info("Scheduler sent person = {}", person);
                 }
             }
         }, 0, schedulerPeriod);
