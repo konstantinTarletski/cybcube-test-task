@@ -54,6 +54,18 @@ public class PersonServiceTest {
     }
 
     @Test
+    public void successfulGetAllPersonsFromDatabase() {
+        personService.getAllPersonsFromDatabase();
+        verify(personDBRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void successfulGetAllPersonsFromRedis() {
+        personService.getAllPersonsFromRedis();
+        verify(personRedisRepository, times(1)).findAll();
+    }
+
+    @Test
     public void testCalculateRating() {
         var personQueue = getTestPersonQueueDto();
         var rating = personService.calculateRating(getTestPersonQueueDto());

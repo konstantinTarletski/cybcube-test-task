@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/consumer")
 @RequiredArgsConstructor
-public class PersonApi {
+public class ConsumerApi {
 
     private final PersonService personService;
 
