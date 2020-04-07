@@ -16,7 +16,6 @@ import java.util.List;
 public class PersonConfiguration {
 
     private double calculationSeed;
-
     private List<PersonApiDto> person = new ArrayList<>();
 
 }
