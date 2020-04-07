@@ -3,7 +3,8 @@ create table person (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     age INTEGER NOT NULL,
-    handling_count INTEGER NOT NULL
+    handling_count INTEGER NOT NULL,
+    rating NUMERIC(8, 5)
 );
 
 ALTER TABLE person

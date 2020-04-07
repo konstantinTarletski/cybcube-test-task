@@ -7,7 +7,7 @@ public class PersonQueueDto {
 
     private String firstName;
     private String lastName;
-    private int age;
     private double calculationSeed;
+    private int age;
 
 }

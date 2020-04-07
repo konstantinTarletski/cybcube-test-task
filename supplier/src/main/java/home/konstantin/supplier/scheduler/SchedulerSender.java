@@ -1,12 +1,13 @@
-package home.konstantin.supplier.service;
+package home.konstantin.supplier.scheduler;
 
 import home.konstantin.supplier.config.PersonConfiguration;
+import home.konstantin.supplier.service.MessageSender;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.util.Timer;
@@ -16,33 +17,33 @@ import static java.util.concurrent.ThreadLocalRandom.current;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SchedulerSender {
 
-    @Autowired
-    private PersonConfiguration personConfiguration;
+    @Value("${scheduler-period}")
+    private int schedulerPeriod;
 
-    @Autowired
-    private SupplierSender supplierSender;
+    private final PersonConfiguration personConfiguration;
+    private final MessageSender messageSender;
 
     @Getter
     @Setter
-    private boolean enabled = false;
+    private volatile boolean enabled = false;
 
     @Bean
     public void scheduler() {
         var timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                if (enabled){
-                    log.info("Scheduler executed for data sending");
+                log.info("Entering scheduler, enabled = {}", enabled);
+                if (enabled) {
                     var randomNum = current().nextInt(0, personConfiguration.getPerson().size());
                     var person = personConfiguration.getPerson().get(randomNum);
-                    supplierSender.setPerson(person);
+                    messageSender.sendPersonToQueue(person);
+                    log.info("Scheduler send person = {}", person);
                 }
             }
-        }, 0, 1000);
+        }, 0, schedulerPeriod);
     }
-
-
 
 }

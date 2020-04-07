@@ -1,34 +1,44 @@
 package home.konstantin.supplier.api;
 
 import home.konstantin.supplier.dto.PersonApiDto;
-import home.konstantin.supplier.service.SchedulerSender;
-import home.konstantin.supplier.service.SupplierSender;
+import home.konstantin.supplier.scheduler.SchedulerSender;
+import home.konstantin.supplier.service.MessageSender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static java.lang.String.format;
+
+@Slf4j
+@RestController
 @RequestMapping("api/persons")
 @RequiredArgsConstructor
 public class PersonApi {
 
     private final SchedulerSender schedulerSender;
-    private final SupplierSender supplierSender;
+    private final MessageSender messageSender;
 
-    @RequestMapping("/request")
-    @PostMapping
-    public void request(@Valid @RequestBody PersonApiDto assetDto) {
-        supplierSender.setPerson(assetDto);
+    @PostMapping(path="/sent-person-to-queue")
+    public String publishMessage(@Valid @RequestBody PersonApiDto assetDto) {
+        messageSender.sendPersonToQueue(assetDto);
+        String logText = format("Person = %s was sent to queue", assetDto);
+        log.info(logText);
+        return logText;
     }
 
-    @PutMapping("/enable-scheduler")
-    public void activate(@PathVariable boolean enable) {
-        schedulerSender.setEnabled(enable);
+    @GetMapping(path="/enable-scheduler")
+    public String enableSender(@RequestParam boolean enabled) {
+        schedulerSender.setEnabled(enabled);
+        String logText = format("Scheduler status now = %s", schedulerSender.isEnabled());
+        log.info(logText);
+        return logText;
     }
-
 
 }

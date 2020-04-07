@@ -3,36 +3,25 @@ package home.konstantin.supplier.service;
 import home.konstantin.supplier.config.PersonConfiguration;
 import home.konstantin.supplier.dto.PersonApiDto;
 import home.konstantin.supplier.dto.PersonQueueDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-
-import java.util.function.Supplier;
 
 @Slf4j
 @Service
-public class SupplierSender implements Supplier<PersonQueueDto> {
+@EnableBinding(Source.class)
+@RequiredArgsConstructor
+public class MessageSender {
 
-    @Autowired
-    private PersonConfiguration personConfiguration;
+    private final Source messageSource;
+    private final PersonConfiguration personConfiguration;
 
-    @Getter
-    @Setter
-    private volatile PersonApiDto person;
-
-    @Bean
-    public Supplier<PersonQueueDto> supplier() {
-        return this;
-    }
-
-    @Override
-    public PersonQueueDto get() {
-        //var personQueue = getPersonQueueDtoFromPersonApiDto(person);
-        log.info("Sending person  = {}", person);
-        return null;//personQueue;
+    public void sendPersonToQueue(PersonApiDto personApi) {
+        log.info("Sending message {} to {} channel", personApi, messageSource.OUTPUT);
+        messageSource.output().send(MessageBuilder.withPayload(getPersonQueueDtoFromPersonApiDto(personApi)).build());
     }
 
     private PersonQueueDto getPersonQueueDtoFromPersonApiDto(PersonApiDto personApi){

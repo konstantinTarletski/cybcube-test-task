@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@ConfigurationProperties(prefix = "test-data")
-@PropertySource("${test-data}")
 @Data
+@Component
+@PropertySource("${test-data}")
+@ConfigurationProperties(prefix = "test-data")
 public class PersonConfiguration {
 
     private double calculationSeed;
