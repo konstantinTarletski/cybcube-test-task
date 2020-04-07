@@ -14,14 +14,15 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit:3.0.3.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.0.3.RELEASE'
+	compileOnly 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'org.springframework.cloud:spring-cloud-stream-binder-test:3.0.3.RELEASE'
 
-	compileOnly 'org.projectlombok:lombok:1.18.12'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
 
 task download(type: Exec) {
