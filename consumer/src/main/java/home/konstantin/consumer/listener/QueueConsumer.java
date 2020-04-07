@@ -19,7 +19,7 @@ public class QueueConsumer {
     @Bean
     public Consumer<PersonQueue> consumer() {
         return value -> {
-            log.info("get item = {}", value);
+            log.info("get item from queue = {}", value);
             personService.processPerson(value);
         };
     }
