@@ -14,6 +14,7 @@ As I understand from test task no any databse is needed, but I decided to use it
 ## Used technologies and tools
 
 * Java 11
+* Gradle
 * Cache manager - redis
 * Spring cloud steams - Queue manages (supports RabbitMQ, Kafka and some others. Can be easily switch from one to another without changing code (only properties file))
 * Postgres
@@ -87,7 +88,6 @@ There are 2 end points in this microservice
         ```
         For now there is 7 persons
 
-
 ## How to run project
 
 This project can be run in 2 ways:
@@ -130,6 +130,12 @@ You can run all this applications by yourself with this data, or you can just ru
 
 `docker-compose up -d postgres redis-commander kafka`
 
+But before running this command, you need to modify `docker-compose.yaml` to set kafka on `localhost`.
+
+Line 15 : `  - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092`
+
+, or define `kafka` us `localhost` for your PC. 
+
 And all needed containers will start automatically for you.
 After that you can just run **consumer** and **supplier** like normal SpringBoot applications.
 
@@ -159,6 +165,3 @@ In this project not much "business" logic and there is no any necessity to cover
 ### TODO
 
 * Add swagger for easy testing
-* Look through all code to make shure that there are not any errors or garbage code. Also check code formating.
-* Read this text,  fix grammatical errors. 
-* Write help files to `supplier` microservice and `consumer` microservice.
