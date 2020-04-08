@@ -1,6 +1,6 @@
 package home.konstantin.consumer.config;
 
-import home.konstantin.consumer.dto.PersonRedisDto;
+import home.konstantin.consumer.model.PersonRedis;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, PersonRedisDto> redisTemplate() {
-        RedisTemplate<String, PersonRedisDto> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }

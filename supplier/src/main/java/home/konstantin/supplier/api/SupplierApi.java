@@ -18,7 +18,7 @@ import static java.lang.String.format;
 
 @Slf4j
 @RestController
-@RequestMapping("api/supplier")
+@RequestMapping("${application.api.base-mapping}")
 @RequiredArgsConstructor
 public class SupplierApi {
 

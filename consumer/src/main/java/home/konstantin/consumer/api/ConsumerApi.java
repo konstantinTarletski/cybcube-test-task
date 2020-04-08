@@ -1,7 +1,7 @@
 package home.konstantin.consumer.api;
 
-import home.konstantin.consumer.dto.PersonDbDto;
-import home.konstantin.consumer.dto.PersonRedisDto;
+import home.konstantin.consumer.model.Person;
+import home.konstantin.consumer.model.PersonRedis;
 import home.konstantin.consumer.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,19 +13,19 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("api/consumer")
+@RequestMapping("${application.api.base-mapping}")
 @RequiredArgsConstructor
 public class ConsumerApi {
 
     private final PersonService personService;
 
     @GetMapping(path = "/get-db-person-list")
-    public List<PersonDbDto> publishMessage() {
+    public List<Person> publishMessage() {
         return personService.getAllPersonsFromDatabase();
     }
 
     @GetMapping(path = "/get-redis-person-list")
-    public List<PersonRedisDto> enableSender() {
+    public List<PersonRedis> enableSender() {
         return personService.getAllPersonsFromRedis();
     }
 

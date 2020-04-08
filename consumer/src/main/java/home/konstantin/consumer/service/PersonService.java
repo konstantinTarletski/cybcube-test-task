@@ -1,8 +1,8 @@
 package home.konstantin.consumer.service;
 
+import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.dto.PersonQueueDto;
-import home.konstantin.consumer.dto.PersonRedisDto;
-import home.konstantin.consumer.dto.PersonDbDto;
+import home.konstantin.consumer.model.PersonRedis;
 import home.konstantin.consumer.repository.PersonDBRepository;
 import home.konstantin.consumer.repository.PersonRedisRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,35 +18,42 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class PersonService {
 
+    private final int INITAL_HANDLING_COUNT = 0;
+
     private final PersonRedisRepository personRedisRepository;
     private final PersonDBRepository personDBRepository;
 
     public void processPerson(PersonQueueDto personQueue) {
         log.info("processing person = {}", personQueue);
-
         var rating = calculateRating(personQueue);
+        processDb(personQueue, rating);
+        var redisPerson = processRedis(personQueue, rating);
+        log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
+    }
 
+    protected void processDb(PersonQueueDto personQueue, double rating){
         var dbPerson = personDBRepository.findByFirstNameAndLastName(personQueue.getFirstName(),
             personQueue.getLastName()).orElse(getPersonDBFromPersonQueue(personQueue));
         dbPerson.setHandlingCount(dbPerson.getHandlingCount() + 1);
         dbPerson.setRating(rating);
         personDBRepository.save(dbPerson);
+    }
 
+    protected PersonRedis processRedis(PersonQueueDto personQueue, double rating){
         var redisPerson = personRedisRepository.findById(
             getRedisId(personQueue.getFirstName(), personQueue.getLastName())).
             orElse(getPersonRedisFromPersonQueue(personQueue));
         redisPerson.setRating(rating);
         personRedisRepository.save(redisPerson);
-
-        log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
+        return redisPerson;
     }
 
-    public List<PersonDbDto> getAllPersonsFromDatabase() {
+    public List<Person> getAllPersonsFromDatabase() {
         return StreamSupport.stream(personDBRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 
-    public List<PersonRedisDto> getAllPersonsFromRedis() {
+    public List<PersonRedis> getAllPersonsFromRedis() {
         return StreamSupport.stream(personRedisRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
@@ -59,19 +66,19 @@ public class PersonService {
         return firstName + " " + lastName;
     }
 
-    private PersonRedisDto getPersonRedisFromPersonQueue(PersonQueueDto input) {
-        var personRedis = new PersonRedisDto();
+    private PersonRedis getPersonRedisFromPersonQueue(PersonQueueDto input) {
+        var personRedis = new PersonRedis();
         personRedis.setId(getRedisId(input.getFirstName(), input.getLastName()));
         return personRedis;
     }
 
-    private PersonDbDto getPersonDBFromPersonQueue(PersonQueueDto input) {
-        var personDB = new PersonDbDto();
-        personDB.setAge(input.getAge());
-        personDB.setFirstName(input.getFirstName());
-        personDB.setLastName(input.getLastName());
-        personDB.setHandlingCount(0);
-        return personDB;
+    private Person getPersonDBFromPersonQueue(PersonQueueDto input) {
+        var person = new Person();
+        person.setAge(input.getAge());
+        person.setFirstName(input.getFirstName());
+        person.setLastName(input.getLastName());
+        person.setHandlingCount(INITAL_HANDLING_COUNT);
+        return person;
     }
 
 }

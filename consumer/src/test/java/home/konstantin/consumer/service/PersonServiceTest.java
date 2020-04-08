@@ -1,8 +1,8 @@
 package home.konstantin.consumer.service;
 
-import home.konstantin.consumer.dto.PersonDbDto;
+import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.dto.PersonQueueDto;
-import home.konstantin.consumer.dto.PersonRedisDto;
+import home.konstantin.consumer.model.PersonRedis;
 import home.konstantin.consumer.repository.PersonDBRepository;
 import home.konstantin.consumer.repository.PersonRedisRepository;
 import org.junit.Before;
@@ -78,8 +78,8 @@ public class PersonServiceTest {
         assertEquals(id, "ABC 123");
     }
 
-    private PersonRedisDto getTestPersonRedisDto(){
-        var person = new PersonRedisDto();
+    private PersonRedis getTestPersonRedisDto(){
+        var person = new PersonRedis();
         person.setId("ABC 123");
         person.setRating(5);
         return person;
@@ -94,8 +94,8 @@ public class PersonServiceTest {
         return person;
     }
 
-    private PersonDbDto getTestPersonDbDto(){
-        var person = new PersonDbDto();
+    private Person getTestPersonDbDto(){
+        var person = new Person();
         person.setAge(10);
         person.setFirstName("ABC");
         person.setLastName("123");
