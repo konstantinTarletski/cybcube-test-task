@@ -6,22 +6,17 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.ThreadLocalRandom.current;
 
 @Slf4j
-@Service
+@Component
+@EnableScheduling
 @RequiredArgsConstructor
 public class SchedulerSender {
-
-    @Value("${scheduler-period}")
-    private int schedulerPeriod;
 
     private final PersonConfiguration personConfiguration;
     private final MessageSender messageSender;
@@ -30,20 +25,15 @@ public class SchedulerSender {
     @Setter
     private volatile boolean enabled = false;
 
-    @Bean
+    @Scheduled(fixedDelayString = "${scheduler-period}", initialDelay = 1000)
     public void scheduler() {
-        var timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                log.info("Entering scheduler, enabled = {}", enabled);
-                if (enabled) {
-                    var randomNum = current().nextInt(0, personConfiguration.getPerson().size());
-                    var person = personConfiguration.getPerson().get(randomNum);
-                    messageSender.sendPersonToQueue(person);
-                    log.info("Scheduler sent person = {}", person);
-                }
-            }
-        }, 0, schedulerPeriod);
+        log.info("Entering scheduler, enabled = {}", enabled);
+        if (enabled) {
+            var randomNum = current().nextInt(0, personConfiguration.getPerson().size());
+            var person = personConfiguration.getPerson().get(randomNum);
+            messageSender.sendPersonToQueue(person);
+            log.info("Scheduler sent person = {}", person);
+        }
     }
 
 }
