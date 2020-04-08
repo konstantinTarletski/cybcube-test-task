@@ -134,7 +134,7 @@ But before running this command, you need to modify `docker-compose.yaml` to set
 
 Line 15 : `  - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092`
 
-, or define `kafka` us `localhost` for your PC. 
+, or define `kafka` as `localhost` for your PC. 
 
 And all needed containers will start automatically for you.
 After that you can just run **consumer** and **supplier** like normal SpringBoot applications.
