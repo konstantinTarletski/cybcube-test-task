@@ -1,7 +1,7 @@
 package home.konstantin.consumer.service;
 
-import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.dto.PersonQueueDto;
+import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.model.PersonRedis;
 import home.konstantin.consumer.repository.PersonDBRepository;
 import home.konstantin.consumer.repository.PersonRedisRepository;
@@ -44,7 +44,7 @@ public class PersonServiceTest {
         when(personDBRepository.findByFirstNameAndLastName(personQueue.getFirstName(),
             personQueue.getLastName())).thenReturn(Optional.of(personDb));
 
-        when(personRedisRepository.findById(personQueue.getFirstName() +
+        when(personRedisRepository.findById(personQueue.getFirstName() + " " +
             personQueue.getLastName())).thenReturn(Optional.of(personRedis));
 
         personService.processPerson(personQueue);
@@ -78,30 +78,25 @@ public class PersonServiceTest {
         assertEquals(id, "ABC 123");
     }
 
-    private PersonRedis getTestPersonRedisDto(){
-        var person = new PersonRedis();
-        person.setId("ABC 123");
-        person.setRating(5);
-        return person;
+    private PersonRedis getTestPersonRedisDto() {
+        return PersonRedis.builder().id("ABC 123").rating(10).build();
     }
 
-    private PersonQueueDto getTestPersonQueueDto(){
-        var person = new PersonQueueDto();
-        person.setAge(10);
-        person.setFirstName("ABC");
-        person.setLastName("123");
-        person.setCalculationSeed(0.5);
-        return person;
+    private Person getTestPersonDbDto() {
+        return Person.builder()
+            .age(10)
+            .firstName("ABC")
+            .lastName("123")
+            .handlingCount(10)
+            .rating(10).build();
     }
 
-    private Person getTestPersonDbDto(){
-        var person = new Person();
-        person.setAge(10);
-        person.setFirstName("ABC");
-        person.setLastName("123");
-        person.setHandlingCount(1);
-        person.setRating(10);
-        return person;
+    private PersonQueueDto getTestPersonQueueDto() {
+        return PersonQueueDto.builder()
+            .age(10)
+            .firstName("ABC")
+            .lastName("123")
+            .calculationSeed(10).build();
     }
 
 }

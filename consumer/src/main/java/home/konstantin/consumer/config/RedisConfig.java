@@ -1,6 +1,5 @@
 package home.konstantin.consumer.config;
 
-import home.konstantin.consumer.model.PersonRedis;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

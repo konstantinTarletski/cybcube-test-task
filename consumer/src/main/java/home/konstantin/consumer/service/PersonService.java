@@ -1,7 +1,7 @@
 package home.konstantin.consumer.service;
 
-import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.dto.PersonQueueDto;
+import home.konstantin.consumer.model.Person;
 import home.konstantin.consumer.model.PersonRedis;
 import home.konstantin.consumer.repository.PersonDBRepository;
 import home.konstantin.consumer.repository.PersonRedisRepository;
@@ -31,7 +31,7 @@ public class PersonService {
         log.info("{} has {} score", redisPerson.getId(), redisPerson.getRating());
     }
 
-    protected void processDb(PersonQueueDto personQueue, double rating){
+    protected void processDb(PersonQueueDto personQueue, double rating) {
         var dbPerson = personDBRepository.findByFirstNameAndLastName(personQueue.getFirstName(),
             personQueue.getLastName()).orElse(getPersonDBFromPersonQueue(personQueue));
         dbPerson.setHandlingCount(dbPerson.getHandlingCount() + 1);
@@ -39,7 +39,7 @@ public class PersonService {
         personDBRepository.save(dbPerson);
     }
 
-    protected PersonRedis processRedis(PersonQueueDto personQueue, double rating){
+    protected PersonRedis processRedis(PersonQueueDto personQueue, double rating) {
         var redisPerson = personRedisRepository.findById(
             getRedisId(personQueue.getFirstName(), personQueue.getLastName())).
             orElse(getPersonRedisFromPersonQueue(personQueue));
@@ -67,18 +67,16 @@ public class PersonService {
     }
 
     private PersonRedis getPersonRedisFromPersonQueue(PersonQueueDto input) {
-        var personRedis = new PersonRedis();
-        personRedis.setId(getRedisId(input.getFirstName(), input.getLastName()));
-        return personRedis;
+        return PersonRedis.builder()
+            .id(getRedisId(input.getFirstName(), input.getLastName())).build();
     }
 
     private Person getPersonDBFromPersonQueue(PersonQueueDto input) {
-        var person = new Person();
-        person.setAge(input.getAge());
-        person.setFirstName(input.getFirstName());
-        person.setLastName(input.getLastName());
-        person.setHandlingCount(INITAL_HANDLING_COUNT);
-        return person;
+        return Person.builder()
+            .age(input.getAge())
+            .firstName(input.getFirstName())
+            .lastName(input.getLastName())
+            .handlingCount(INITAL_HANDLING_COUNT).build();
     }
 
 }

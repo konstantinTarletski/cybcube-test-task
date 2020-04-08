@@ -1,14 +1,16 @@
 package home.konstantin.consumer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Id;
 
 @Data
-@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @RedisHash("persons")
 public class PersonRedis {

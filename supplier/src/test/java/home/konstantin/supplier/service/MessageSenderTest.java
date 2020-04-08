@@ -55,20 +55,17 @@ public class MessageSenderTest {
     }
 
     private PersonApiDto getTestPersonApiDto() {
-        var person = new PersonApiDto();
-        person.setAge(10);
-        person.setFirstName("ABC");
-        person.setLastName("123");
-        return person;
+        return PersonApiDto.builder()
+            .age(10)
+            .firstName("ABC")
+            .lastName("123").build();
     }
 
     private PersonQueueDto getTestPersonQueueDto() {
-        var person = new PersonQueueDto();
-        person.setAge(10);
-        person.setFirstName("ABC");
-        person.setLastName("123");
-        person.setCalculationSeed(personConfiguration.getCalculationSeed());
-        return person;
+        return PersonQueueDto.builder()
+            .firstName("ABC")
+            .lastName("123")
+            .calculationSeed(personConfiguration.getCalculationSeed()).build();
     }
 
 }
