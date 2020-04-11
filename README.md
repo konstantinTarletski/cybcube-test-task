@@ -18,7 +18,6 @@ As I understand from test task no any databse is needed, but I decided to use it
 * Cache manager - redis
 * Spring cloud steams - Queue manages (supports RabbitMQ, Kafka and some others. Can be easily switch from one to another without changing code (only properties file))
 * Postgres
-* Gradle
 * SpringBoot 2
 * Lombok
 * Docker
@@ -96,7 +95,7 @@ This project can be run in 2 ways:
 
 ### Run with docker-compose
 
-Tu run this application with "docker-compose" you need just run the command :
+To run this application with "docker-compose" you need just run the command :
 
 `docker-compose up -d`
 
